@@ -1,0 +1,3 @@
+# Pinned lockfile for reproducible installs (compiled from pyproject.toml).
+# Committed on purpose — supply-chain pinning. Regenerate with pip-tools/uv.
+click==8.1.7

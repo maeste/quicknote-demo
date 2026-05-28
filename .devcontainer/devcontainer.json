@@ -1,0 +1,11 @@
+{
+  "name": "quicknote",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "postCreateCommand": "pip install -e '.[dev]' && pre-commit install",
+  "customizations": {
+    "vscode": {
+      "extensions": ["charliermarsh.ruff", "ms-python.mypy-type-checker"]
+    }
+  },
+  "// security": "Restrict outbound network to package registries; deny by default. Tighten egress in your host/devcontainer firewall — see docs/agent-execution.md."
+}

@@ -1,6 +1,17 @@
+# Python
 __pycache__/
 *.pyc
 *.egg-info/
 dist/
 build/
 .venv/
+
+# Secrets — never commit real values
+.env
+*.pem
+*.key
+id_rsa
+*credentials*
+
+# Agent-ready artifacts (optional to commit)
+.agent-ready/
