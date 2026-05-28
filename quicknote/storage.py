@@ -1,35 +1,42 @@
 import json
-import os
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
+Note = dict[str, Any]
 
 DEFAULT_STORE = Path.home() / ".quicknote" / "notes.json"
 
 
-def _ensure_store(path):
+def _ensure_store(path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists():
         path.write_text("[]")
 
 
-def load_notes(path=None):
-    path = Path(path) if path else DEFAULT_STORE
-    _ensure_store(path)
-    with open(path) as f:
+def _resolve(path: str | Path | None) -> Path:
+    return Path(path) if path else DEFAULT_STORE
+
+
+def load_notes(path: str | Path | None = None) -> list[Note]:
+    store = _resolve(path)
+    _ensure_store(store)
+    with open(store) as f:
         return json.load(f)
 
 
-def save_notes(notes, path=None):
-    path = Path(path) if path else DEFAULT_STORE
-    _ensure_store(path)
-    with open(path, "w") as f:
+def save_notes(notes: list[Note], path: str | Path | None = None) -> None:
+    store = _resolve(path)
+    _ensure_store(store)
+    with open(store, "w") as f:
         json.dump(notes, f, indent=2)
 
 
-def add_note(title, body, tags=None, path=None):
+def add_note(
+    title: str, body: str, tags: list[str] | None = None, path: str | Path | None = None
+) -> Note:
     notes = load_notes(path)
-    note = {
+    note: Note = {
         "id": len(notes) + 1,
         "title": title,
         "body": body,
@@ -42,16 +49,16 @@ def add_note(title, body, tags=None, path=None):
     return note
 
 
-def delete_note(note_id, path=None):
+def delete_note(note_id: int, path: str | Path | None = None) -> None:
     notes = load_notes(path)
     notes = [n for n in notes if n["id"] != note_id]
     save_notes(notes, path)
 
 
-def search_notes(query, path=None):
+def search_notes(query: str, path: str | Path | None = None) -> list[Note]:
     notes = load_notes(path)
     query = query.lower()
-    results = []
+    results: list[Note] = []
     for note in notes:
         if query in note["title"].lower() or query in note["body"].lower():
             results.append(note)
@@ -60,7 +67,7 @@ def search_notes(query, path=None):
     return results
 
 
-def get_note(note_id, path=None):
+def get_note(note_id: int, path: str | Path | None = None) -> Note | None:
     notes = load_notes(path)
     for note in notes:
         if note["id"] == note_id:
@@ -68,7 +75,13 @@ def get_note(note_id, path=None):
     return None
 
 
-def update_note(note_id, title=None, body=None, tags=None, path=None):
+def update_note(
+    note_id: int,
+    title: str | None = None,
+    body: str | None = None,
+    tags: list[str] | None = None,
+    path: str | Path | None = None,
+) -> Note | None:
     notes = load_notes(path)
     for note in notes:
         if note["id"] == note_id:

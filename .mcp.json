@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "serena": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/oraios/serena", "serena-mcp-server", "--context", "ide-assistant"],
+      "comment": "Semantic code navigation (LSP-backed) so agents can find symbols and references instead of grepping. Portable: any MCP-capable agent can use it."
+    }
+  }
+}
