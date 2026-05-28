@@ -22,9 +22,11 @@ quicknote/        application source
 
 ```bash
 pip install -e ".[dev]"   # install with dev deps
-pytest                    # run tests
+pytest                    # run tests (full suite, <2s)
+pytest -k storage         # fast subset while iterating
 ruff check .              # lint
 ruff format .             # format
+mypy                      # type-check
 ```
 
 ## Conventions
