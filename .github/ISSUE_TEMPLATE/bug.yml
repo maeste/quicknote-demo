@@ -1,0 +1,20 @@
+name: Bug Report
+description: Report a bug in QuickNote
+labels: ["bug"]
+body:
+  - type: textarea
+    attributes:
+      label: What happened?
+      description: Describe the bug clearly.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps to trigger the bug.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Python version
+      placeholder: "3.12"
